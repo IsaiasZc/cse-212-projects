@@ -1,3 +1,7 @@
+using System.Globalization;
+using System.Security.Cryptography;
+using System.Xml.XPath;
+
 public static class ArraySelector
 {
     public static void Run()
@@ -11,6 +15,22 @@ public static class ArraySelector
 
     private static int[] ListSelector(int[] list1, int[] list2, int[] select)
     {
-        return [];
+        var from1 = 0;
+        var from2 = 0;
+        int[] results = new int[select.Length];
+        for (int i = 0; i < select.Length; i++)
+        {
+            if (select[i] == 1)
+            {
+                results[i] = list1[from1];
+                from1++;
+            }
+            else
+            {
+                results[i] = list2[from2];
+                from2++;
+            }
+        }
+        return results;
     }
 }
