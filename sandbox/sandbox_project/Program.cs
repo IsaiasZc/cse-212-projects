@@ -8,6 +8,9 @@ public class Program
         // with any code or ideas you have that do not directly apply to
         // one of your projects.
 
-        Console.WriteLine("Hello Sandbox World!");
+        Console.Write("What is your favorite color?: ");
+        string color = Console.ReadLine();
+
+        Console.WriteLine("Your favorite color is: " + color);
     }
 }
