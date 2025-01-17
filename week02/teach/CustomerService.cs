@@ -11,19 +11,75 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
+        // Scenario: Create two customer service, one with a valida size (5) and other with an invalid size (-2), and the second one needs to show a size of 10 after the creation:
+        // CustomerServiceValidSize = new CustomerService(5);
+        // CustomerServiceinvalidSize = new CustomerService(-2);
         // Expected Result: 
         Console.WriteLine("Test 1");
+
+        var CustomerServiceValidSize = new CustomerService(5);
+        var CustomerServiceInvalidSize = new CustomerService(-2);
+        // Defect(s) Found: 
+
+        Console.WriteLine("Customer Service Valid (should be 5): " + CustomerServiceValidSize.ToString());
+        Console.WriteLine("Customer Service invalid (should be 10): " + CustomerServiceInvalidSize.ToString());
+
+        Console.WriteLine("=================");
+
+        // Test 2
+        // Scenario: Running the AddNewCustomer should add a customer to the Queue
+        // Expected Result: [size=1 max_size=2 => Customer(id): problem]
+        Console.WriteLine("Test 2");
+
+        var CustomerServiceAddToQueue = new CustomerService(2);
+
+
+        CustomerServiceAddToQueue.AddNewCustomer();
+
+        Console.WriteLine(CustomerServiceAddToQueue);
 
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
 
-        // Test 2
-        // Scenario: 
-        // Expected Result: 
-        Console.WriteLine("Test 2");
+        // Test 3
+        // Scenario: Should arise a warning when we try to add more customers than the allowed
+        // Expected Result: "Maximum Number of Customers in Queue."
+        Console.WriteLine("Test 3");
 
+        CustomerServiceAddToQueue.AddNewCustomer();
+        CustomerServiceAddToQueue.AddNewCustomer();
+
+        Console.WriteLine(CustomerServiceAddToQueue);
+
+        // Defect(s) Found: 
+
+        Console.WriteLine("=================");
+
+        // Test 4
+        // Scenario: function shall dequeue the next customer from the queue and display the details
+        // Expected Result: Information of the first customer added to the queue
+        Console.WriteLine("Test 4");
+
+        CustomerServiceAddToQueue.ServeCustomer();
+
+        Console.WriteLine(CustomerServiceAddToQueue);
+        // Defect(s) Found: 
+
+        Console.WriteLine("=================");
+
+        // Test 5
+        // Scenario: If the queue is empty when trying to serve a customer, then an error message will be displayed
+        // Expected Result: "The Customer Service is empty."
+        Console.WriteLine("Test 5");
+
+        Console.WriteLine("Removing the last Customer");
+        CustomerServiceAddToQueue.ServeCustomer();
+
+        Console.WriteLine("====Trying to Serve Another customer, should throw an error====");
+        CustomerServiceAddToQueue.ServeCustomer();
+
+        Console.WriteLine(CustomerServiceAddToQueue);
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
@@ -67,7 +123,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -88,8 +144,14 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
+
+        if (_queue.Count == 0) {
+            Console.WriteLine("The Customer Service is empty.");
+            return;
+        }
+
         var customer = _queue[0];
+        _queue.RemoveAt(0);
         Console.WriteLine(customer);
     }
 
